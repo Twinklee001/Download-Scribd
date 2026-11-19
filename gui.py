@@ -106,17 +106,17 @@ class ScribdApp(ctk.CTk):
         options_card.grid_columnconfigure((0, 1), weight=1)
 
         # Export Format
-        fmt_label = ctk.CTkLabel(options_card, text="Định dạng xuất file (Giữ nguyên gốc):", font=ctk.CTkFont(weight="bold"))
+        fmt_label = ctk.CTkLabel(options_card, text="Định dạng xuất file:", font=ctk.CTkFont(weight="bold"))
         fmt_label.grid(row=0, column=0, padx=15, pady=(10, 5), sticky="w")
 
-        self.format_var = ctk.StringVar(value="auto")
+        self.format_var = ctk.StringVar(value="pdf")
         self.format_seg = ctk.CTkSegmentedButton(
             options_card,
-            values=["🌟 Tự động (Gốc)", "📄 PDF (.pdf)", "📝 Word (.docx)", "📊 PowerPoint (.pptx)"],
+            values=["📄 PDF (.pdf)"],
             height=32,
             font=ctk.CTkFont(size=11, weight="bold")
         )
-        self.format_seg.set("🌟 Tự động (Gốc)")
+        self.format_seg.set("📄 PDF (.pdf)")
         self.format_seg.grid(row=0, column=1, padx=15, pady=(10, 5), sticky="ew")
 
         # Export Mode
@@ -285,14 +285,7 @@ class ScribdApp(ctk.CTk):
         headless = self.headless_var.get()
         scroll_delay = float(self.delay_slider.get())
 
-        fmt_map = {
-            "🌟 Tự động (Gốc)": "auto",
-            "📄 PDF (.pdf)": "pdf",
-            "📝 Word (.docx)": "docx",
-            "📊 PowerPoint (.pptx)": "pptx"
-        }
-        chosen_fmt = self.format_seg.get()
-        export_format = fmt_map.get(chosen_fmt, "auto")
+        export_format = "pdf"
 
         self.is_downloading = True
         self.start_btn.configure(state="disabled", fg_color="gray")

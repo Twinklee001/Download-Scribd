@@ -48,7 +48,7 @@ class ScribdFastMiniApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Scribd Auto Downloader - Giữ Nguyên Định Dạng Gốc")
+        self.title("Scribd PDF Downloader")
         self.geometry("580x570")
         self.resizable(False, False)
 
@@ -74,7 +74,7 @@ class ScribdFastMiniApp(ctk.CTk):
 
         sub_label = ctk.CTkLabel(
             main_frame,
-            text="Tự động giữ nguyên 100% nội dung & định dạng gốc (Word, PDF, PowerPoint)",
+            text="Tự động trích xuất và lưu tài liệu Scribd sang định dạng PDF sắc nét",
             font=ctk.CTkFont(size=12),
             text_color="#A0AEC0"
         )
@@ -108,16 +108,16 @@ class ScribdFastMiniApp(ctk.CTk):
         fmt_label = ctk.CTkLabel(main_frame, text="2. Định dạng lưu về máy:", font=ctk.CTkFont(size=13, weight="bold"))
         fmt_label.pack(anchor="w", pady=(0, 4))
 
-        self.format_var = ctk.StringVar(value="auto")
+        self.format_var = ctk.StringVar(value="pdf")
         
         self.format_seg = ctk.CTkSegmentedButton(
             main_frame,
-            values=["🌟 Tự động (Gốc)", "📄 PDF", "📝 Word (.docx)", "📊 PowerPoint (.pptx)"],
+            values=["📄 PDF (.pdf)"],
             command=self._on_format_change,
             height=36,
             font=ctk.CTkFont(size=12, weight="bold")
         )
-        self.format_seg.set("🌟 Tự động (Gốc)")
+        self.format_seg.set("📄 PDF (.pdf)")
         self.format_seg.pack(fill="x", pady=(0, 12))
 
         # 3. SAVE DIRECTORY
@@ -266,15 +266,8 @@ class ScribdFastMiniApp(ctk.CTk):
         if cookie:
             save_saved_cookie(cookie)
 
-        # Get chosen format
-        fmt_map = {
-            "🌟 Tự động (Gốc)": "auto",
-            "📄 PDF": "pdf",
-            "📝 Word (.docx)": "docx",
-            "📊 PowerPoint (.pptx)": "pptx"
-        }
-        chosen_str = self.format_seg.get()
-        export_format = fmt_map.get(chosen_str, "auto")
+        # Only PDF output is supported
+        export_format = "pdf"
 
         self.is_downloading = True
         self.download_btn.configure(state="disabled", text="⚡ ĐANG TẢI & XỬ LÝ ĐỊNH DẠNG...", fg_color="#4A5568")
@@ -328,7 +321,7 @@ class ScribdFastMiniApp(ctk.CTk):
         if sys.platform == "win32":
             os.startfile(folder)
             
-        messagebox.showinfo("Thành công", f"🎉 Đã tải và giữ nguyên định dạng file!\n\nĐịnh dạng: {ext}\nLưu tại: {saved_path}")
+        messagebox.showinfo("Thành công", f"🎉 Đã tải xong file PDF!\n\nĐịnh dạng: {ext}\nLưu tại: {saved_path}")
 
     def _on_error(self, err_msg):
         self.is_downloading = False

@@ -47,14 +47,7 @@ def run_cli_interactive():
 
     output_path = os.path.join(output_dir, fname)
 
-    print("\nChọn định dạng xuất file:")
-    print("1. 🌟 Tự động (Giữ nguyên định dạng gốc trên Scribd: DOCX/PPTX/PDF)")
-    print("2. 📄 File PDF (.pdf)")
-    print("3. 📝 File Word (.docx)")
-    print("4. 📊 File PowerPoint (.pptx)")
-    fmt_choice = input("Lựa chọn (1/2/3/4, Mặc định 1): ").strip()
-    fmt_map = {"1": "auto", "2": "pdf", "3": "docx", "4": "pptx"}
-    export_format = fmt_map.get(fmt_choice, "auto")
+    export_format = "pdf"
 
     cookie_input = input("\n🔑 Cookie Scribd (Dán _scribd_session để tải file gốc S3, Enter để bỏ qua): ").strip()
 
@@ -93,7 +86,7 @@ def main():
     parser.add_argument("--url", type=str, help="URL hoặc ID của tài liệu Scribd cần tải")
     parser.add_argument("--output", type=str, default="downloads", help="Thư mục lưu file")
     parser.add_argument("--name", type=str, help="Tên file xuất ra")
-    parser.add_argument("--format", choices=["auto", "pdf", "docx", "pptx"], default="auto", help="Định dạng xuất file")
+    parser.add_argument("--format", choices=["pdf"], default="pdf", help="Định dạng xuất file (PDF)")
     parser.add_argument("--cookie", type=str, default=None, help="Cookie Scribd (_scribd_session) để tải trực tiếp file gốc")
     parser.add_argument("--mode", choices=["direct_pdf", "browser_print"], default="direct_pdf", help="Chế độ xuất file")
     parser.add_argument("--headless", action="store_true", help="Chạy Chrome ở chế độ ẩn (Headless)")
